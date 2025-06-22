@@ -40,40 +40,16 @@ def simulate_gbm_paths(S0, T, r, sigma, q, n_steps, n_paths):
         paths[:, t] = paths[:, t-1] * np.exp(drift + diffusion * z)
     return paths
 
-# Streamlit app
 def main():
-
-    st.markdown(
-        """
-        This illustrates the gains and losses from a discretely-rebalanced delta hedge
-        under the Black-Scholes assumptions.  It assumes that a European call is sold and is hedged by 
-        replicating a long call.  The initial portfolio value is zero.  The final portfolio value is the
-        value of the replicating portfolio minus the intrinsic value of the call.  Click the &#9654; arrow 
-        above to open up a window with sliders that control the model parameters, including the number of times
-        the hedge is rebalanced and the number of simulations.
-        """
-    )
-    
-    st.sidebar.header("Model Parameters")
-    n_rebalances = st.sidebar.slider("Number of Rebalances", min_value=10, max_value=1000, value=20, step=10)
-    n_paths = st.sidebar.slider("Number of Simulations", min_value=10, max_value=500, value=50, step=10)
-    S0 = st.sidebar.slider("Initial Stock Price (S₀)", min_value=10, max_value=200, value=100, step=1)
-    strike = st.sidebar.slider("Strike Price (K)", min_value=10, max_value=200, value=100, step=1)
-    T = st.sidebar.slider("Time to Maturity (T, in years)", min_value=0.1, max_value=3.0, value=1.0, step=0.1)
-    r = st.sidebar.slider("Risk-Free Rate (r, in %)", min_value=0.0, max_value=10.0, value=2.0, step=0.1) / 100.0
-    sigma = st.sidebar.slider("Volatility (σ, in %)", min_value=5.0, max_value=100.0, value=20.0, step=1.0) / 100.0
-    q = st.sidebar.slider("Dividend Yield (q, in %)", min_value=0.0, max_value=10.0, value=1.0, step=0.1) / 100.0
-    
-
-    st.write("##### Current Parameters")
-    st.write(f"- Number of Rebalances: {n_rebalances}")
-    st.write(f"- Number of Simulations: {n_paths}")
-    st.write(f"- Initial Stock Price (S₀): {S0}")
-    st.write(f"- Strike Price (K): {strike}")
-    st.write(f"- Time to Maturity (T): {T} years")
-    st.write(f"- Risk-Free Rate (r): {r:.2%}")
-    st.write(f"- Volatility (σ): {sigma:.2%}")
-    st.write(f"- Dividend Yield (q): {q:.2%}")
+    with st.sidebar:
+        n_rebalances = st.slider("Number of Rebalances", min_value=10, max_value=1000, value=20, step=10)
+        n_paths = st.slider("Number of Simulations", min_value=10, max_value=500, value=50, step=10)
+        S0 = st.slider("Initial Stock Price (S₀)", min_value=10, max_value=200, value=100, step=1)
+        strike = st.slider("Strike Price (K)", min_value=10, max_value=200, value=100, step=1)
+        T = st.slider("Time to Maturity (T, in years)", min_value=0.1, max_value=3.0, value=1.0, step=0.1)
+        r = st.slider("Risk-Free Rate (r, in %)", min_value=0.0, max_value=10.0, value=2.0, step=0.1) / 100.0
+        sigma = st.slider("Volatility (σ, in %)", min_value=5.0, max_value=100.0, value=20.0, step=1.0) / 100.0
+        q = st.slider("Dividend Yield (q, in %)", min_value=0.0, max_value=10.0, value=1.0, step=0.1) / 100.0
   
     
     # Simulate stock price paths
@@ -107,7 +83,6 @@ def main():
     # Plot the distribution
     fig, ax = plt.subplots(figsize=(8, 5))
     ax.hist(portfolio_values, bins=50, color="blue", alpha=0.7, edgecolor="black")
-    ax.set_title("Distribution of Portfolio Values at Maturity")
     ax.set_xlabel("Portfolio Value")
     ax.set_ylabel("Frequency")
     ax.grid(True)
