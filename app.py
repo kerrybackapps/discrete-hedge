@@ -41,15 +41,37 @@ def simulate_gbm_paths(S0, T, r, sigma, q, n_steps, n_paths):
     return paths
 
 def main():
-    with st.sidebar:
-        n_rebalances = st.slider("Number of Rebalances", min_value=10, max_value=1000, value=20, step=10)
-        n_paths = st.slider("Number of Simulations", min_value=10, max_value=500, value=50, step=10)
-        S0 = st.slider("Initial Stock Price (S₀)", min_value=10, max_value=200, value=100, step=1)
-        strike = st.slider("Strike Price (K)", min_value=10, max_value=200, value=100, step=1)
-        T = st.slider("Time to Maturity (T, in years)", min_value=0.1, max_value=3.0, value=1.0, step=0.1)
-        r = st.slider("Risk-Free Rate (r, in %)", min_value=0.0, max_value=10.0, value=2.0, step=0.1) / 100.0
-        sigma = st.slider("Volatility (σ, in %)", min_value=5.0, max_value=100.0, value=20.0, step=1.0) / 100.0
-        q = st.slider("Dividend Yield (q, in %)", min_value=0.0, max_value=10.0, value=1.0, step=0.1) / 100.0
+    # Top control area with shaded background
+    with st.container():
+        st.markdown("""
+            <style>
+            .control-area {
+                background-color: #f0f2f6;
+                padding: 20px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+            }
+            </style>
+            <div class="control-area">
+            """, unsafe_allow_html=True)
+        
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            n_rebalances = st.slider("Number of Rebalances", min_value=10, max_value=1000, value=20, step=10)
+            n_paths = st.slider("Number of Simulations", min_value=10, max_value=500, value=50, step=10)
+            S0 = st.slider("Initial Stock Price (S₀)", min_value=10, max_value=200, value=100, step=1)
+        
+        with col2:
+            strike = st.slider("Strike Price (K)", min_value=10, max_value=200, value=100, step=1)
+            T = st.slider("Time to Maturity (T, in years)", min_value=0.1, max_value=3.0, value=1.0, step=0.1)
+            r = st.slider("Risk-Free Rate (r, in %)", min_value=0.0, max_value=10.0, value=2.0, step=0.1) / 100.0
+        
+        with col3:
+            sigma = st.slider("Volatility (σ, in %)", min_value=5.0, max_value=100.0, value=20.0, step=1.0) / 100.0
+            q = st.slider("Dividend Yield (q, in %)", min_value=0.0, max_value=10.0, value=1.0, step=0.1) / 100.0
+        
+        st.markdown("</div>", unsafe_allow_html=True)
   
     
     # Simulate stock price paths
