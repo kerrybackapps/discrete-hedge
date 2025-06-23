@@ -3,6 +3,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 
+# CSS for responsive iframe scaling
+st.markdown("""
+<style>
+/* Make the entire app responsive */
+.main .block-container {
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+/* Scale content to fit iframe */
+.stApp {
+    transform-origin: top left;
+    width: 100%;
+}
+
+/* Ensure plots scale properly */
+.js-plotly-plot {
+    width: 100% !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # Black-Scholes Delta
 def bs_delta(S, K, T, r, sigma, q):
     """
