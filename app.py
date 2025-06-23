@@ -41,20 +41,8 @@ def simulate_gbm_paths(S0, T, r, sigma, q, n_steps, n_paths):
     return paths
 
 def main():
-    # Top control area with shaded background
+    # Top control area
     with st.container():
-        st.markdown("""
-            <style>
-            .control-area {
-                background-color: #f0f2f6;
-                padding: 20px;
-                border-radius: 10px;
-                margin-bottom: 20px;
-            }
-            </style>
-            <div class="control-area">
-            """, unsafe_allow_html=True)
-        
         col1, col2, col3 = st.columns(3)
         
         with col1:
@@ -71,7 +59,6 @@ def main():
             sigma = st.slider("Volatility (σ, in %)", min_value=5.0, max_value=100.0, value=20.0, step=1.0) / 100.0
             q = st.slider("Dividend Yield (q, in %)", min_value=0.0, max_value=10.0, value=1.0, step=0.1) / 100.0
         
-        st.markdown("</div>", unsafe_allow_html=True)
   
     
     # Simulate stock price paths
