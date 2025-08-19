@@ -3,6 +3,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 
+# Configure page
+st.set_page_config(page_title="Discrete Hedging Simulation", layout="wide")
+
+# Enable iframe embedding
+st.markdown("""
+<script>
+// Allow iframe embedding
+if (window.location !== window.parent.location) {
+    document.domain = document.domain;
+}
+// Remove X-Frame-Options restrictions
+window.addEventListener('load', function() {
+    if (window.parent !== window) {
+        console.log('Running in iframe - embedding allowed');
+    }
+});
+</script>
+""", unsafe_allow_html=True)
+
 # CSS for responsive iframe scaling
 st.markdown("""
 <style>
